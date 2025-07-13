@@ -1,6 +1,6 @@
 const url = 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities';
 
-const API_KEY = import.meta.env.VITE_RAPIDAPI_KEY;
+export const API_KEY = import.meta.env.VITE_RAPIDAPI_KEY;
 
 export const geoApiOptions = {
   method: 'GET',
@@ -20,3 +20,6 @@ export const fetchCities = async (searchText) => {
     return [];
   }
 };
+
+export const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5'
+export const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
