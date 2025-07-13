@@ -1,44 +1,92 @@
-import React from 'react'
-import './currentWeather.css'
+import React from 'react';
+import { motion } from 'framer-motion';
+import {
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  Divider,
+  Box,
+} from '@mui/material';
 
-const CurrentWeather = ({data}) => {
+const CurrentWeather = ({ data }) => {
   return (
-    <>
-        <div className="weather">
-            <div className="top">
-                <div>
-                <p className='city'>{data.city}</p>
-                <p className='weather-description'>{data.weather[0].description}</p>
-                </div>
-                <img className='weather-icon' src={`icons/${data.weather[0].icon}.png`} alt="weather" />
-            </div>
-            <div className="bottom">
-                <p className='temperature'>{Math.round(data.main.temp)}°C</p>
-                <div className="details">
-                    <div className="parameter-row">
-                        <span className='parameter-label'>Details</span>
-                    </div>
-                    <div className="parameter-row">
-                        <span className='parameter-label'>Feels like</span>
-                        <span className='parameter-value'>{Math.round(data.main.feels_like)}°C</span>
-                    </div>
-                    <div className="parameter-row">
-                        <span className='parameter-label'>Wind</span>
-                        <span className='parameter-value'>{data.wind.speed} m/s</span>
-                    </div>
-                    <div className="parameter-row">
-                        <span className='parameter-label'>Humidity</span>
-                        <span className='parameter-value'>{data.main.humidity}%</span>
-                    </div>
-                    <div className="parameter-row">
-                        <span className='parameter-label'>Pressure</span>
-                        <span className='parameter-value'>{data.main.pressure} hPa</span>
-                            </div>
-                        </div>
-                </div>
-        </div>
-    </>
-  )
-}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <Card
+        sx={{
+          maxWidth: 500,
+          margin: 'auto',
+          mt: 4,
+          borderRadius: 3,
+          backgroundColor: '#e3f2fd',
+          boxShadow: 4,
+        }}
+      >
+        <CardContent>
+          <Grid container alignItems="center" justifyContent="space-between">
+            <Grid item>
+              <Typography variant="h5" fontWeight="bold">
+                {data.city}
+              </Typography>
+              <Typography variant="subtitle1" color="text.secondary">
+                {data.weather[0].description}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <motion.img
+                key={data.weather[0].icon}
+                src={`icons/${data.weather[0].icon}.png`}
+                alt="weather"
+                style={{ width: 80 }}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5 }}
+              />
+            </Grid>
+          </Grid>
 
-export default CurrentWeather
+          <Divider sx={{ my: 2 }} />
+
+          <Typography variant="h2" textAlign="center" color="primary">
+            {Math.round(data.main.temp)}°C
+          </Typography>
+
+          <Divider sx={{ my: 2 }} />
+
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Box>
+                <Typography variant="subtitle2">Feels Like</Typography>
+                <Typography>{Math.round(data.main.feels_like)}°C</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box>
+                <Typography variant="subtitle2">Wind</Typography>
+                <Typography>{data.wind.speed} m/s</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box>
+                <Typography variant="subtitle2">Humidity</Typography>
+                <Typography>{data.main.humidity}%</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box>
+                <Typography variant="subtitle2">Pressure</Typography>
+                <Typography>{data.main.pressure} hPa</Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+};
+
+export default CurrentWeather;
